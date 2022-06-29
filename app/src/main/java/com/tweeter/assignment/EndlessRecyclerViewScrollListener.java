@@ -20,17 +20,18 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         this.mLayoutManager = layoutManager;
     }
 
-    public int getLastVisibleItem(int[] lastVisibleItemPositions) {
-        int maxSize = 0;
-        for (int i = 0; i < lastVisibleItemPositions.length; i++) {
-            if (i == 0) {
-                maxSize = lastVisibleItemPositions[i];
+    private int getLastVisibleItem(int[] lastVisibleItemPositions) {
+        if (lastVisibleItemPositions.length > 0)
+        {
+            int maxSize = lastVisibleItemPositions[0];
+            for (int lastVisibleItemPosition : lastVisibleItemPositions) {
+                if (lastVisibleItemPosition > maxSize) {
+                    maxSize = lastVisibleItemPosition;
+                }
             }
-            else if (lastVisibleItemPositions[i] > maxSize) {
-                maxSize = lastVisibleItemPositions[i];
-            }
+            return maxSize;
         }
-        return maxSize;
+        return 0;
     }
 
     @Override
